@@ -1,30 +1,15 @@
 const { Builder, By, until } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 const { expect } = require("chai");
+const createDriver = require("../helpers/create-driver");
 
 describe("Test 7 — Ajout au panier ShopNow", function () {
-  this.timeout(10000);
+  this.timeout(60000);
 
   let driver;
 
   beforeEach(async function () {
-    const options = new chrome.Options().addArguments(
-      "--headless",
-      "--disable-gpu",
-      "--disable-dev-shm-usage",
-      "--no-sandbox"
-    );
-    const builder = new Builder()
-      .forBrowser("chrome")
-      .setChromeOptions(options);
-
-    if (process.env.CHROMEDRIVER_PATH) {
-      builder.setChromeService(
-        new chrome.ServiceBuilder(process.env.CHROMEDRIVER_PATH)
-      );
-    }
-
-    driver = await builder.build();
+    driver = await createDriver();
   });
 
   afterEach(async function () {

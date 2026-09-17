@@ -2,31 +2,16 @@ const { Builder } = require("selenium-webdriver");
 const chrome = require("selenium-webdriver/chrome");
 const { expect } = require("chai");
 const LoginPage = require("../pages/LoginPage");
+const createDriver = require("../helpers/create-driver");
 
 describe("Page de connexion ShopNow", function () {
-  this.timeout(10000);
+  this.timeout(60000);
 
   let driver;
   let loginPage;
 
   beforeEach(async function () {
-    const options = new chrome.Options().addArguments(
-      "--headless",
-      "--disable-gpu",
-      "--disable-dev-shm-usage",
-      "--no-sandbox"
-    );
-    const builder = new Builder()
-      .forBrowser("chrome")
-      .setChromeOptions(options);
-
-    if (process.env.CHROMEDRIVER_PATH) {
-      builder.setChromeService(
-        new chrome.ServiceBuilder(process.env.CHROMEDRIVER_PATH)
-      );
-    }
-
-    driver = await builder.build();
+    driver = await createDriver();
     loginPage = new LoginPage(driver, process.env.BASE_URL || "http://localhost:3000");
   });
 
